@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 /**
  * Created by Jo Øivind Gjernes on 03.02.2016.
+ *
+ * Hurtiglager for utregning av cosinus og sinus
  */
 public class VinkelCache
 {
@@ -12,6 +14,12 @@ public class VinkelCache
 	private static int miss = 0;
 	private static int hit = 0;
 
+	/**
+	 * Sjekker om en vinkel har blitt beregnet, hvis ikke
+	 * beregnes den og legges i cosCache
+	 * @param radianer radianer for vinkel
+	 * @return cosinusverdi for @param radianer
+	 */
 	public double getCosVinkel(double radianer)
 	{
 		if(cosCache.containsKey(radianer)){
@@ -24,6 +32,12 @@ public class VinkelCache
 		}
 	}
 
+	/**
+	 * Sjekker om en vinkel har blitt beregnet, hvis ikke
+	 * beregnes den og legges i sinCache
+	 * @param radianer radianer for vinkel
+	 * @return sinusverdi for @param radianer
+	 */
 	public double getSinVinkel(double radianer)
 	{
 		if(sinCache.containsKey(radianer)){
