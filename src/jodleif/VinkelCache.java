@@ -41,8 +41,10 @@ public class VinkelCache
 	public double getSinVinkel(double radianer)
 	{
 		if(sinCache.containsKey(radianer)){
+			++hit;
 			return sinCache.get(radianer);
 		} else {
+			++miss;
 			sinCache.put(radianer, Math.sin(radianer));
 			return sinCache.get(radianer);
 		}
