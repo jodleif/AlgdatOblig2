@@ -17,20 +17,22 @@ public class Main extends Application
 	private final BorderPane hovedLayout = new BorderPane();
 	private final Canvas tegneOmråde = new Canvas();
 	private final GraphicsContext grafikk = tegneOmråde.getGraphicsContext2D();
-	private final static double WIDTH = 800;
-	private final static double HEIGHT = 600;
+	protected final static double WIDTH = 800;
+	protected final static double HEIGHT = 600;
 	private final static VinkelCache cache = new VinkelCache();
 	private final VBox kontrollPanel = new VBox();
 	private final HBox knappePanel = new HBox();
 	private final HBox varPanel = new HBox();
 	private final ScrollBar vinkel = new ScrollBar();
 	private final ScrollBar lengde = new ScrollBar();
+	private Tre tre = new Tre();
 
 	// VARIABLER FOR TEGNING AV TREET
 	private static double VEKSTFAKTOR = 0.7;
 	private static double MIN_LEN = 2.0;
 	private static DoubleProperty VINKEL_VEKST ;
 	private static DoubleProperty INITIELL_LENGDE;
+	static int nivå=0;
 
 
 	@Override
@@ -39,10 +41,11 @@ public class Main extends Application
 		Scene scene = new Scene(hovedLayout, WIDTH, HEIGHT);
 
 		settOppGui();
-		tegnGrein((WIDTH-100)/2.0,HEIGHT-100,150,0);
+		//tegnGrein((WIDTH-100)/2.0,HEIGHT-100,150,0);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		tre.oppdater();
 		System.out.println(cache);
 	}
 
@@ -56,9 +59,7 @@ public class Main extends Application
 
 		Button tegnPåNytt = new Button("Tegn");
 		tegnPåNytt.setOnAction(e -> {
-			grafikk.clearRect(0,0,WIDTH,HEIGHT);
-			tegnTre();
-			System.out.println(cache);
+			tre.oppdater();
 		});
 		knappePanel.getChildren().add(tegnPåNytt);
 		vinkel.setUnitIncrement(0.1);
