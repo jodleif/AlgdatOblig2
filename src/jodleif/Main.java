@@ -16,10 +16,14 @@ public class Main extends Application
 	private final GraphicsContext grafikk = tegneOmråde.getGraphicsContext2D();
 	private final static double WIDTH = 800;
 	private final static double HEIGHT = 600;
-	private final static double VEKSTFAKTOR = 0.7;
-	private final static double MIN_LEN = 2.0;
 	private final static VinkelCache cache = new VinkelCache();
 	private final HBox knappePanel = new HBox();
+
+	// VARIABLER FOR TEGNING AV TREET
+	private static double VEKSTFAKTOR = 0.7;
+	private static double MIN_LEN = 2.0;
+	private static double VINKEL_VEKST = 0.33;
+	private static double INITIELL_LENGDE = 150;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception
@@ -49,21 +53,24 @@ public class Main extends Application
 		knappePanel.getChildren().add(tegnPåNytt);
 	}
 
+	/**
+	 * "Hjelpemetode" for å starte tegning av treet
+	 */
 	private void tegnTre()
 	{
-		tegnGrein((WIDTH-100)/2.0,HEIGHT-100,150,0);
+		tegnGrein((WIDTH-100)/2.0,HEIGHT-100,INITIELL_LENGDE,0);
 	}
 
 	private void tegnGrein(double x0, double y0, double length, double vinkel)
 	{
-		if(length <=MIN_LEN){
+		if(length <= MIN_LEN){
 			return;
 		}
 		double nyX = x0-length*cache.getSinVinkel(vinkel);
 		double nyY = y0-length*cache.getCosVinkel(vinkel);
 		grafikk.strokeLine(x0, y0, nyX,nyY);
-		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel+0.34);
-		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel-0.34);
+		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel+VINKEL_VEKST);
+		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel-VINKEL_VEKST);
 	}
 
 	public static void main(String[] args)
