@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class Main extends Application
@@ -17,6 +19,8 @@ public class Main extends Application
 	private final static double VEKSTFAKTOR = 0.7;
 	private final static double MIN_LEN = 2.0;
 	private final static VinkelCache cache = new VinkelCache();
+	private final HBox knappePanel = new HBox();
+
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
@@ -35,6 +39,19 @@ public class Main extends Application
 		hovedLayout.setCenter(tegneOmråde);
 		tegneOmråde.setWidth(WIDTH-100);
 		tegneOmråde.setHeight(HEIGHT-100);
+		hovedLayout.setBottom(knappePanel);
+		Button tegnPåNytt = new Button("Tegn");
+		tegnPåNytt.setOnAction(e -> {
+			grafikk.clearRect(0,0,WIDTH,HEIGHT);
+			tegnTre();
+			System.out.println(cache);
+		});
+		knappePanel.getChildren().add(tegnPåNytt);
+	}
+
+	private void tegnTre()
+	{
+		tegnGrein((WIDTH-100)/2.0,HEIGHT-100,150,0);
 	}
 
 	private void tegnGrein(double x0, double y0, double length, double vinkel)
