@@ -15,7 +15,7 @@ public class Main extends Application
 	private final static double WIDTH = 800;
 	private final static double HEIGHT = 600;
 	private final static double VEKSTFAKTOR = 0.666;
-
+	private final static VinkelCache cache = new VinkelCache();
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
@@ -26,6 +26,7 @@ public class Main extends Application
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		System.out.println(cache);
 	}
 
 	private void settOppGui()
@@ -40,8 +41,8 @@ public class Main extends Application
 		if(length <=5.0){
 			return;
 		}
-		double nyX = x0-length*Math.sin(vinkel);
-		double nyY = y0-length*Math.cos(vinkel);
+		double nyX = x0-length*cache.getSinVinkel(vinkel);
+		double nyY = y0-length*cache.getCosVinkel(vinkel);
 		grafikk.strokeLine(x0, y0, nyX,nyY);
 		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel+0.34);
 		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel-0.34);
