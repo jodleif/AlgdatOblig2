@@ -14,7 +14,8 @@ public class Main extends Application
 	private final GraphicsContext grafikk = tegneOmråde.getGraphicsContext2D();
 	private final static double WIDTH = 800;
 	private final static double HEIGHT = 600;
-	private final static double VEKSTFAKTOR = 0.666;
+	private final static double VEKSTFAKTOR = 0.7;
+	private final static double MIN_LEN = 2.0;
 	private final static VinkelCache cache = new VinkelCache();
 	@Override
 	public void start(Stage primaryStage) throws Exception
@@ -38,7 +39,7 @@ public class Main extends Application
 
 	private void tegnGrein(double x0, double y0, double length, double vinkel)
 	{
-		if(length <=5.0){
+		if(length <=MIN_LEN){
 			return;
 		}
 		double nyX = x0-length*cache.getSinVinkel(vinkel);
