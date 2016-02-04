@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Jo Øivind Gjernes on 03.02.2016.
@@ -38,7 +37,7 @@ public class Tre
 		VINKEL_VEKST = vinkel_vekst;
 	}
 
-	private void tegnTre()
+	private void genererPunkter()
 	{
 		greiner = new ArrayList<>();
 		for(int i=0;i<nivåer;++i) greiner.add(new Stack<>());
@@ -47,7 +46,7 @@ public class Tre
 	}
 	public void oppdater()
 	{
-		tegnTre();
+		genererPunkter();
 	}
 
 	private void tegnGrein(double x0, double y0, double length, double vinkel, int nivå)
@@ -65,10 +64,6 @@ public class Tre
 		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel-VINKEL_VEKST, nivå-1);
 	}
 
-	public ArrayList<Stack<double[]>> getGreiner()
-	{
-		return greiner;
-	}
 
 	public static void tegnNivå(Stack<double[]> punkter, GraphicsContext grafikk, int nivå)
 	{
@@ -87,33 +82,13 @@ public class Tre
 
 	public void tegn(Canvas canvas)
 	{
-		tegnTre();
+		genererPunkter();
 		Timer timer = new Timer();
 		int i = nivåer-1;
 		for(Stack<double[]> punkter : greiner){
 			timer.schedule(new TimerTaskJodl(nivåer-i-1, punkter, canvas.getGraphicsContext2D())
 			, 1000*i);
 			--i;
-		}
-	}
-
-	public void tegnNivå(GraphicsContext context, int nivå)
-	{
-		if((nivå-1)>greiner.size()||nivå<0) return;
-		Stack<double[]> nivået = greiner.get(nivå);
-		int size = nivået.size();
-		for(int i=0;i<size;++i){
-			double[] linje = nivået.pop();
-			context.strokeLine(linje[0],linje[1],linje[2],linje[3]);
-		}
-	}
-
-	private static void pause()
-	{
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (Exception e){
-			System.err.println(e.getMessage());
 		}
 	}
 
