@@ -50,18 +50,23 @@ public class Plotter
 	 */
 	public Canvas tegn(Tegnbar tegnbar)
 	{
+		return tegnFinAnimasjon(tegnbar, 1);
+	}
+
+	public Canvas tegnFinAnimasjon(Tegnbar tegnbar, int split)
+	{
+
 		Timer timer = new Timer();
-		int i = 0;
 		Canvas nyttTegneområde = new Canvas();
 		nyttTegneområde.setHeight(Main.HEIGHT);
 		nyttTegneområde.setWidth(Main.WIDTH);
 
-		int høyde = tegnbar.getHøyde();
+		ArrayList<ArrayList<double[]>> liste = Hjelpemetoder.økMengdenPunkter(tegnbar.getPunkter(), split);
+		int høyde = liste.size();
 
-		for(ArrayList<double[]> punkter : tegnbar.getPunkter()){
-			timer.schedule(new DrawTimer(høyde-i-1, punkter, nyttTegneområde.getGraphicsContext2D())
+		for(int i=0;i<liste.size();++i){
+			timer.schedule(new DrawTimer(høyde-1-i, liste.get(i), nyttTegneområde.getGraphicsContext2D())
 				, 100*i);
-			i++;
 		}
 		return nyttTegneområde;
 	}

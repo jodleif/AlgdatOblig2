@@ -19,21 +19,21 @@ public class Hjelpemetoder
 			for (ArrayList<double[]> delteGreiner : deltNivå) {
 				nyListe.add(delteGreiner);
 			}
+			if(splitnr>1) splitnr/=1.5;
 		}
 
 		return nyListe;
 	}
 
-	public static ArrayList<ArrayList<double[]>> økPunkter(ArrayList<double[]> punkter, int splitnr)
+	private static ArrayList<ArrayList<double[]>> økPunkter(ArrayList<double[]> punkter, int splitnr)
 	{
 		ArrayList<ArrayList<double[]>> nyListe = new ArrayList<>();
-		//double[] start = punkter.get(0);
-		//double[] redusert = reduserLengde(start, splitnr);
+		double[] redusert = reduserLengde(punkter.get(0), splitnr);
 
-		/*if(!sjekkLengde(redusert)) {
+		if(!sjekkLengde(redusert)) {
 			nyListe.add(punkter);
 			return nyListe;
-		}*/
+		}
 
 		ArrayList<double[]> førstePass = new ArrayList<>();
 
@@ -54,6 +54,13 @@ public class Hjelpemetoder
 		return nyListe;
 	}
 
+	/**
+	 * Reduserere lengden på en linje til en lengde som går opp i antallSplitt
+	 * f.eks antallSplitt = 10, blir den nye lengden = gammelLengde/10
+	 * @param linje linje man vil "forkorte"
+	 * @param antallSplitt hvilket antall skal lengden gå opp i
+	 * @return ny, forkortet linje (kun en)
+	 */
 	public static double[] reduserLengde(double[] linje, int antallSplitt)
 	{
 		double[] delta = finnDelta(linje);
@@ -75,9 +82,14 @@ public class Hjelpemetoder
 		return new double[] {linje[2]-linje[0],linje[3]-linje[1]};
 	}
 
-	public static boolean sjekkLengde(double[] linjer)
+	public static boolean sjekkLengde(double[] linje)
 	{
-		int len = (int)Math.sqrt(Math.pow(linjer[2]-linjer[0],2)+Math.pow(linjer[3]-linjer[1],2));
+		int len = (int)finnLengde(linje);
 		return len > 1;
+	}
+
+	public static double finnLengde(double[] linje)
+	{
+		return Math.sqrt(Math.pow(linje[2]-linje[0],2)+Math.pow(linje[3]-linje[1],2));
 	}
 }

@@ -22,7 +22,7 @@ public class Main extends Application
 	private final HBox varPanel = new HBox();
 	private final ScrollBar vinkel = new ScrollBar();
 	private final ScrollBar lengde = new ScrollBar();
-	private Tre tre;
+	private Tegnbar tre;
 	private Plotter plotter = new Plotter();
 
 	// VARIABLER FOR TEGNING AV TREET
@@ -56,8 +56,10 @@ public class Main extends Application
 
 		Button tegnPåNytt = new Button("Tegn");
 		tegnPåNytt.setOnAction(e -> tegnTre());
+		Button viskUt = new Button("Visk ut");
+		viskUt.setOnAction(e-> hovedLayout.setCenter(null));
 
-		knappePanel.getChildren().add(tegnPåNytt);
+		knappePanel.getChildren().addAll(tegnPåNytt, viskUt);
 		vinkel.setUnitIncrement(0.1);
 		vinkel.setMax(Math.PI);
 		vinkel.setMin(0);
@@ -76,8 +78,8 @@ public class Main extends Application
 	 */
 	private void tegnTre()
 	{
-		tre = new Tre(18, INITIELL_LENGDE.get(), VINKEL_VEKST.get());
-		hovedLayout.setCenter(plotter.tegn(tre));
+		tre = new Tre(15, INITIELL_LENGDE.get(), VINKEL_VEKST.get());
+		hovedLayout.setCenter(plotter.tegnFinAnimasjon(tre,25));
 	}
 
 	/**
