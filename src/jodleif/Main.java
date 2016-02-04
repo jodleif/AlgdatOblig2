@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class Main extends Application
 {
 	private final BorderPane hovedLayout = new BorderPane();
-	private final Canvas tegneOmråde = new Canvas();
+	private Canvas tegneOmråde = new Canvas();
 	private final GraphicsContext grafikk = tegneOmråde.getGraphicsContext2D();
 	protected final static double WIDTH = 800;
 	protected final static double HEIGHT = 600;
@@ -59,10 +59,11 @@ public class Main extends Application
 
 		Button tegnPåNytt = new Button("Tegn");
 		tegnPåNytt.setOnAction(e -> {
-			tegneOmråde.getGraphicsContext2D().clearRect(0,0,WIDTH,HEIGHT);
+			hovedLayout.getChildren().remove(tegneOmråde);
 			tre = new Tre(15, INITIELL_LENGDE.get(), VINKEL_VEKST.get());
 			tre.oppdater();
-			tre.tegn(tegneOmråde);
+			tegneOmråde = tre.tegn();
+			hovedLayout.setCenter(tegneOmråde);
 		});
 		knappePanel.getChildren().add(tegnPåNytt);
 		vinkel.setUnitIncrement(0.1);
@@ -103,5 +104,6 @@ public class Main extends Application
 	public static void main(String[] args)
 	{
 		launch(args);
+		System.exit(0);
 	}
 }
