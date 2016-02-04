@@ -60,6 +60,7 @@ public class Main extends Application
 		Button tegnPåNytt = new Button("Tegn");
 		tegnPåNytt.setOnAction(e -> {
 			tre.oppdater();
+			tre.tegn(tegneOmråde);
 		});
 		knappePanel.getChildren().add(tegnPåNytt);
 		vinkel.setUnitIncrement(0.1);

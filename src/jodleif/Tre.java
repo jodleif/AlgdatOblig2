@@ -1,18 +1,24 @@
 package jodleif;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Jo Øivind Gjernes on 03.02.2016.
+ *
+ * Treet.
  */
 public class Tre
 {
 	private ArrayList<Stack<double[]>> greiner;
-	private VinkelCache cache = new VinkelCache();
+	private static final VinkelCache cache = new VinkelCache();
 
 	private double VEKSTFAKTOR = 0.7;
 	private double VINKEL_VEKST ;
@@ -35,7 +41,7 @@ public class Tre
 	private void tegnTre()
 	{
 		greiner = new ArrayList<>();
-		for(int i=0;i<nivåer;++i) greiner.add(new Stack<double[]>());
+		for(int i=0;i<nivåer;++i) greiner.add(new Stack<>());
 
 		tegnGrein((Main.WIDTH-100)/2.0,Main.HEIGHT-100,INITIELL_LENGDE,0,nivåer);
 	}
@@ -64,19 +70,30 @@ public class Tre
 		return greiner;
 	}
 
-	public static void tegnNivå(Stack<double[]> nivå, GraphicsContext grafikk)
+	public static void tegnNivå(Stack<double[]> punkter, GraphicsContext grafikk, int nivå)
 	{
-		while(!nivå.isEmpty()){
-			double linje[] = nivå.pop();
+		if(nivå<2)
+			grafikk.setStroke(Color.GREEN);
+		else if (nivå<3)
+			grafikk.setStroke(Color.RED);
+		else
+			grafikk.setStroke(Color.BLACK);
+
+		while(!punkter.isEmpty()){
+			double linje[] = punkter.pop();
 			grafikk.strokeLine(linje[0],linje[1],linje[2],linje[3]);
 		}
 	}
 
-	public void tegn(GraphicsContext context)
+	public void tegn(Canvas canvas)
 	{
 		tegnTre();
-		for(Stack<double[]> nivå : greiner){
-
+		Timer timer = new Timer();
+		int i = nivåer-1;
+		for(Stack<double[]> punkter : greiner){
+			timer.schedule(new TimerTaskJodl(nivåer-i-1, punkter, canvas.getGraphicsContext2D())
+			, 1000*i);
+			--i;
 		}
 	}
 
@@ -99,33 +116,22 @@ public class Tre
 			System.err.println(e.getMessage());
 		}
 	}
-	/*
-	class DrawThread implements Runnable
+
+	class TimerTaskJodl extends TimerTask
 	{
-		private Stack<double[]> nivå;
-		private GraphicsContext graphicsContext;
-		public DrawThread(Stack<double[]> nivå, GraphicsContext context)
+		protected int nivå;
+		protected Stack<double[]> punkter;
+		protected GraphicsContext cont;
+		public TimerTaskJodl(int nivå, Stack<double[]> punkter, GraphicsContext cont)
 		{
 			this.nivå = nivå;
-			graphicsContext = context;
+			this.punkter = punkter;
+			this.cont = cont;
 		}
 		@Override
 		public void run()
 		{
-			while(!nivå.isEmpty()){
-				double linje[] = nivå.pop();
-				Canvas canvas = new Canvas();
-				graphicsContext.strokeLine(linje[0],linje[1],linje[2],linje[3]);
-			}
+			tegnNivå(punkter, cont, nivå);
 		}
-
-		private void pause()
-		{
-			try {
-				TimeUnit.MILLISECONDS.sleep(100);
-			} catch (Exception e){
-				System.err.println(e.getMessage());
-			}
-		}
-	}*/
+	}
 }
