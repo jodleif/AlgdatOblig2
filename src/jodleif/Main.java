@@ -59,6 +59,8 @@ public class Main extends Application
 
 		Button tegnPåNytt = new Button("Tegn");
 		tegnPåNytt.setOnAction(e -> {
+			tegneOmråde.getGraphicsContext2D().clearRect(0,0,WIDTH,HEIGHT);
+			tre = new Tre(15, INITIELL_LENGDE.get(), VINKEL_VEKST.get());
 			tre.oppdater();
 			tre.tegn(tegneOmråde);
 		});
