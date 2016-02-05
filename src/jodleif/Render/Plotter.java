@@ -32,11 +32,11 @@ public class Plotter
 {
 	/**
 	 * Funksjon for å tegne et "nivå" (en arraylist med linjer) på et Canvas.
-	 * @param punkter Arraylist med double[] verider som er formatert slik: double[0] = x0, double[1] = y0, double[2] = x1, double[3] = y1
+	 * @param nivå Arraylist med double[] verider som er formatert slik: double[0] = x0, double[1] = y0, double[2] = x1, double[3] = y1
 	 * @param grafikk graphicscontext fra Canvas man skal tegne på
 	 * @param avstandTilTopp antall nivåer man er unna toppen. (det øverste nivået har avstandtilTopp == 0, brukes kun for fargelegging)
 	 */
-	public static void tegnNivå(ArrayList<double[]> punkter, GraphicsContext grafikk, int avstandTilTopp)
+	public static void tegnNivå(ArrayList<double[]> nivå, GraphicsContext grafikk, int avstandTilTopp)
 	{
 		switch(avstandTilTopp) {
 			case 0:
@@ -53,7 +53,7 @@ public class Plotter
 				grafikk.setStroke(Color.BLACK);
 		}
 
-		for(double[] linje : punkter){
+		for(double[] linje : nivå){
 			grafikk.strokeLine(linje[0],linje[1],linje[2],linje[3]);
 		}
 	}
@@ -78,9 +78,9 @@ public class Plotter
 	{
 		Canvas nyttTegneområde = lagNyttTegneområde();
 		GraphicsContext grafikkKontekst = nyttTegneområde.getGraphicsContext2D();
-		for(ArrayList<double[]> lister : tegnbar.getPunkter())
+		for(ArrayList<double[]> triangler : tegnbar.getPunkter())
 		{
-			for(double[] triangel : lister){
+			for(double[] triangel : triangler){
 
 				/**
 				 * Tegne en trekant ved hjelp av tre punkter
