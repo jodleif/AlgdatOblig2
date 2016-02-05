@@ -30,6 +30,7 @@ import java.util.TimerTask;
  */
 public class Plotter
 {
+
 	/**
 	 * Funksjon for å tegne et "nivå" (en arraylist med linjer) på et Canvas.
 	 *
@@ -84,6 +85,7 @@ public class Plotter
 		{
 			for(double[] triangel : triangler){
 
+				//grafikkKontekst.setFill(finnTilfeldigFarge());
 				/**
 				 * Tegne en trekant ved hjelp av tre punkter
 				 * (ett i hvert hjørne)
@@ -93,6 +95,23 @@ public class Plotter
 		}
 		return nyttTegneområde;
 	}
+
+	/*
+
+ 	private final static Color[] farger = {
+		Color.BLACK,
+		Color.PINK,
+		Color.GREEN,
+		Color.RED,
+		Color.AZURE,
+		Color.YELLOW,
+		Color.CYAN
+	};
+	private static Color finnTilfeldigFarge()
+	{
+		int rnd = (int)(Math.random() * farger.length);
+		return farger[rnd%farger.length]; //Beskyttelse for å gå utenfor.
+	}*/
 
 	/**
 	 * Tegn et tegnbart objekt som består av linjer
