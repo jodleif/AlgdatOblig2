@@ -1,4 +1,7 @@
-package jodleif;
+package jodleif.Logikk;
+
+import jodleif.Main;
+import jodleif.VinkelCache;
 
 import java.util.ArrayList;
 
@@ -46,6 +49,11 @@ public class Tre implements Tegnbar
 
 		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel+VINKEL_VEKST, nivå+1);
 		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel-VINKEL_VEKST, nivå+1);
+	}
+
+	public BasisObjekt getBasisObjekt()
+	{
+		return BasisObjekt.Linje;
 	}
 
 

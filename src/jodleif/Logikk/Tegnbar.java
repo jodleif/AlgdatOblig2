@@ -1,4 +1,4 @@
-package jodleif;
+package jodleif.Logikk;
 
 import java.util.ArrayList;
 
@@ -11,4 +11,10 @@ public interface Tegnbar
 	ArrayList<ArrayList<double[]>> getPunkter();
 
 	int getHøyde();
+
+	/**
+	 * Hvilket type objekt som skal tegnes
+	 * @return basisobjekt enum
+	 */
+	BasisObjekt getBasisObjekt();
 }

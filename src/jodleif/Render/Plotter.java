@@ -1,8 +1,11 @@
-package jodleif;
+package jodleif.Render;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import jodleif.Hjelpemetoder;
+import jodleif.Logikk.Tegnbar;
+import jodleif.Main;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -11,7 +14,21 @@ import java.util.TimerTask;
 /**
  * Created by Jo Øivind Gjernes on 04.02.2016.
  *
- * Klasse for å plotte et "tegnbart" interface
+ * Klasse for å plotte et "tegnbart" interface basert på hvilket type BasisObjekt som skal tegnes
+ *
+ * Format for Linjer:
+ * ArrayList<ArrayList<double[]>>
+ *         med en layout: double {x0,y0,x1,y1};
+ * Format for Triangler:
+ * ArrayList<ArrayList<double[]>>
+ *         med layout: double {
+ *                 x0,y0
+ *                 x1,y1
+ *                 x2,y2
+ *         }
+ *
+ *
+ *
  */
 public class Plotter
 {
@@ -55,12 +72,48 @@ public class Plotter
 
 	public Canvas tegnFinAnimasjon(Tegnbar tegnbar, int split)
 	{
+		switch(tegnbar.getBasisObjekt()){
+			case Linje:
+				return tegnFinLinjeAnimasjon(tegnbar, split);
+			case Triangel:
+				return tegnTriangler(tegnbar);
+			default:
+				return new Canvas();
+		}
+	}
+	private Canvas tegnTriangler(Tegnbar tegnbar)
+	{
+		Canvas nyttTegneområde = lagNyttTegneområde();
+		GraphicsContext grafikkKontekst = nyttTegneområde.getGraphicsContext2D();
+		for(ArrayList<double[]> lister : tegnbar.getPunkter())
+		{
+			for(double[] triangel : lister){
+
+				/**
+				 * Tegne en trekant ved hjelp av tre punkter
+				 * (ett i hvert hjørne)
+				 */
+				tegnTriangel(triangel, grafikkKontekst);
+			}
+		}
+		return nyttTegneområde;
+	}
+
+	private static void tegnTriangel(double[] triangel, GraphicsContext cnt)
+	{
+
+		cnt.fillPolygon(
+			new double[]{triangel[0],triangel[2],triangel[4]},
+			new double[]{triangel[1],triangel[3],triangel[5]},
+			3
+		);
+	}
+
+	private Canvas tegnFinLinjeAnimasjon(Tegnbar tegnbar, int split)
+	{
 
 		Timer timer = new Timer();
-		Canvas nyttTegneområde = new Canvas();
-		nyttTegneområde.setHeight(Main.HEIGHT);
-		nyttTegneområde.setWidth(Main.WIDTH);
-
+		Canvas nyttTegneområde = lagNyttTegneområde();
 		ArrayList<ArrayList<double[]>> liste = Hjelpemetoder.økMengdenPunkter(tegnbar.getPunkter(), split);
 		int høyde = liste.size();
 
@@ -70,7 +123,13 @@ public class Plotter
 		}
 		return nyttTegneområde;
 	}
-
+	private static Canvas lagNyttTegneområde()
+	{
+		Canvas nyttTegneområde = new Canvas();
+		nyttTegneområde.setHeight(Main.HEIGHT);
+		nyttTegneområde.setWidth(Main.WIDTH);
+		return nyttTegneområde;
+	}
 	/**
 	 * Indre klasse som brukes for å kunne planlegge utføring av "tegning" på canvas, i en timer.
  	 */
