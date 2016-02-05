@@ -38,9 +38,16 @@ public class Sierpinsky implements Tegnbar
 		rekursivTegn(startx,starty,basisLengde,nivåer);
 	}
 
+	/**
+	 * Rekursiv funksjon for å tegne en sierpinsky triangle
+	 * @param x0 startsposisjon hjørne trekant
+	 * @param y0 startsposisjon hjørne trekant
+	 * @param lengde lengde på grunnlinjen
+	 * @param nivå brukes for å holde kontroll på "dybden" av rekursjonen. Nivå 0 -> bunn
+	 */
 	private void rekursivTegn(double x0, double y0, double lengde, int nivå)
 	{
-		if(nivå<=0) {
+		if(nivå<=0) { // BASECASE
 			triangler.get(0).add(new double[]{
 				x0,y0,
 				x0-lengde/2, y0-lengde,
@@ -48,6 +55,8 @@ public class Sierpinsky implements Tegnbar
 			});
 			return;
 		}
+
+		// Rekursjon
 		rekursivTegn(x0,y0,lengde/2,nivå-1);
 		rekursivTegn(x0-lengde/4,y0-lengde/2,lengde/2,nivå-1);
 		rekursivTegn(x0-lengde/2,y0,lengde/2,nivå-1);
