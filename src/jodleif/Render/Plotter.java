@@ -3,12 +3,10 @@ package jodleif.Render;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import jodleif.Felles.Hjelpemetoder;
 import jodleif.Logikk.Tegnbar;
 import jodleif.Main;
 
 import java.util.ArrayList;
-import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -67,14 +65,9 @@ public class Plotter
 	 */
 	public Canvas tegn(Tegnbar tegnbar)
 	{
-		return tegnFinAnimasjon(tegnbar, 1);
-	}
-
-	public Canvas tegnFinAnimasjon(Tegnbar tegnbar, int split)
-	{
 		switch(tegnbar.getBasisObjekt()){
 			case Linje:
-				return tegnFinLinjeAnimasjon(tegnbar, split);
+				return tegnLinje(tegnbar);
 			case Triangel:
 				return tegnTriangler(tegnbar);
 			default:
@@ -99,9 +92,53 @@ public class Plotter
 		return nyttTegneområde;
 	}
 
+	private Canvas tegnLinje(Tegnbar tegnbar)
+	{
+		Canvas nyttTegneområde = lagNyttTegneområde();
+		GraphicsContext grafikk = nyttTegneområde.getGraphicsContext2D();
+		int høyde = tegnbar.getHøyde();
+		int teller = 1;
+		for(ArrayList<double[]> punkter : tegnbar.getPunkter())
+		{
+			tegnNivå(punkter, grafikk, (høyde-teller));
+			++teller;
+		}
+		return nyttTegneområde;
+	}
+/*
+	private Canvas tegnAnimerteTriangler(Tegnbar tegnbar)
+	{
+		Canvas nyttTegneområde = lagNyttTegneområde();
+		GraphicsContext grafikkKontekst = nyttTegneområde.getGraphicsContext2D();
+		ArrayList<double[]> punkter = tegnbar.getPunkter().get(0);
+		ArrayList<DrawTriangles> taskListe = new ArrayList<>();
+		int teller = 0;
+
+		ArrayList<double[]> punktKopi = new ArrayList<>();
+		for(double[] punkt : punkter)
+		{
+			++teller;
+			punktKopi.add(punkt);
+			// for hver gruppe med 25 trekanter
+			if(teller%3==0)
+			{
+				// lag en tegneoppgave
+				taskListe.add(new DrawTriangles(punktKopi, grafikkKontekst));
+				// opprett en ny liste med trekanter
+				punktKopi = new ArrayList<>();
+			}
+		}
+		Timer timer = new Timer();
+
+		for(int i=0;i<taskListe.size();++i)
+		{
+			timer.schedule(taskListe.get(i), i*10);
+		}
+		return nyttTegneområde;
+	}*/
+
 	private static void tegnTriangel(double[] triangel, GraphicsContext cnt)
 	{
-
 		cnt.fillPolygon(
 			new double[]{triangel[0],triangel[2],triangel[4]},
 			new double[]{triangel[1],triangel[3],triangel[5]},
@@ -109,20 +146,6 @@ public class Plotter
 		);
 	}
 
-	private Canvas tegnFinLinjeAnimasjon(Tegnbar tegnbar, int split)
-	{
-
-		Timer timer = new Timer();
-		Canvas nyttTegneområde = lagNyttTegneområde();
-		ArrayList<ArrayList<double[]>> liste = Hjelpemetoder.økMengdenPunkter(tegnbar.getPunkter(), split);
-		int høyde = liste.size();
-
-		for(int i=0;i<liste.size();++i){
-			timer.schedule(new DrawTimer(høyde-1-i, liste.get(i), nyttTegneområde.getGraphicsContext2D())
-				, 100*i);
-		}
-		return nyttTegneområde;
-	}
 	private static Canvas lagNyttTegneområde()
 	{
 		Canvas nyttTegneområde = new Canvas();
@@ -149,6 +172,35 @@ public class Plotter
 		public void run()
 		{
 			tegnNivå(punkter, cont, avstandTilTopp);
+		}
+
+	}
+
+	class DrawTriangles extends TimerTask
+	{
+		protected ArrayList<double[]> punkter;
+		protected GraphicsContext cnt;
+		public DrawTriangles(ArrayList<double[]> trekanter, GraphicsContext cnt)
+		{
+			this.cnt = cnt;
+			this.punkter = trekanter;
+		}
+
+		@Override
+		public void run()
+		{
+			punkter.forEach(doubles -> cnt.fillPolygon(
+				new double[]{ // x-punkter
+					doubles[0],
+					doubles[2],
+					doubles[4]
+				}, new double[] { // y-punkter
+					doubles[1],
+					doubles[3],
+					doubles[5],
+				},
+				3
+			));
 		}
 
 	}

@@ -96,11 +96,11 @@ public class Main extends Application
 	private void tegnTre()
 	{
 		if(tgl.getSelectedToggle()==tglSierp) {
-			tre = new Sierpinsky(5, INITIELL_LENGDE.get());
+			tre = new Sierpinsky(6, INITIELL_LENGDE.get()*4);
 		} else {
 			tre = new Tre(10, INITIELL_LENGDE.get(),VINKEL_VEKST.get());
 		}
-		hovedLayout.setCenter(plotter.tegnFinAnimasjon(tre,10));
+		hovedLayout.setCenter(plotter.tegn(tre));
 	}
 
 	/**
