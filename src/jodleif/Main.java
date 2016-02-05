@@ -30,7 +30,7 @@ public class Main extends Application
 	private final ScrollBar lengde = new ScrollBar();
 	private Tegnbar tre;
 	private Plotter plotter = new Plotter();
-	private ToggleGroup tgl;
+	private ToggleGroup valgGruppe;
 	private ToggleButton tglSierp;
 	private ToggleButton tglTre;
 
@@ -63,28 +63,33 @@ public class Main extends Application
 		hovedLayout.setBottom(kontrollPanel);
 		kontrollPanel.getChildren().addAll(knappePanel,varPanel);
 
-		Button tegnPåNytt = new Button("Tegn");
-		tegnPåNytt.setOnAction(e -> tegnTre());
 		Button viskUt = new Button("Visk ut");
+		Button tegnPåNytt = new Button("Tegn");
+		knappePanel.getChildren().addAll(tegnPåNytt, viskUt);
+
+		// Kople knappen til metoden tegnTre()
+		tegnPåNytt.setOnAction(e -> tegnTre());
+		// Visk ut nuller ut canvas
 		viskUt.setOnAction(e-> hovedLayout.setCenter(null));
 
-		knappePanel.getChildren().addAll(tegnPåNytt, viskUt);
 		vinkel.setUnitIncrement(0.1);
 		vinkel.setMax(Math.PI);
 		vinkel.setMin(0);
 		VINKEL_VEKST = vinkel.valueProperty();
+
 		lengde.setUnitIncrement(5);
 		lengde.setMin(5);
 		lengde.setMax(200);
 		INITIELL_LENGDE = lengde.valueProperty();
+
 		varPanel.getChildren().addAll(vinkel,lengde);
 
-		tgl = new ToggleGroup();
+		valgGruppe = new ToggleGroup();
 		tglSierp = new ToggleButton("Sierpinsky");
-		tglSierp.setToggleGroup(tgl);
+		tglSierp.setToggleGroup(valgGruppe);
 		tglTre = new ToggleButton("Tre");
-		tglTre.setToggleGroup(tgl);
-		tgl.selectToggle(tglTre);
+		tglTre.setToggleGroup(valgGruppe);
+		valgGruppe.selectToggle(tglTre);
 		knappePanel.getChildren().addAll(tglSierp, tglTre);
 
 
@@ -95,7 +100,7 @@ public class Main extends Application
 	 */
 	private void tegnTre()
 	{
-		if(tgl.getSelectedToggle()==tglSierp) {
+		if(valgGruppe.getSelectedToggle()==tglSierp) {
 			tre = new Sierpinsky(6, INITIELL_LENGDE.get()*4);
 		} else {
 			tre = new Tre(10, INITIELL_LENGDE.get(),VINKEL_VEKST.get());
