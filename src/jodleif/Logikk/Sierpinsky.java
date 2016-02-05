@@ -1,5 +1,7 @@
 package jodleif.Logikk;
 
+import jodleif.Main;
+
 import java.util.ArrayList;
 
 /**
@@ -31,7 +33,9 @@ public class Sierpinsky implements Tegnbar
 	private void tegn(int nivåer, double basisLengde)
 	{
 		triangler.add(new ArrayList<>());
-		rekursivTegn(300,300,basisLengde,nivåer);
+		double startx = Main.WIDTH / 2 + basisLengde/2;
+		double starty = Main.HEIGHT;
+		rekursivTegn(startx,starty,basisLengde,nivåer);
 	}
 
 	private void rekursivTegn(double x0, double y0, double lengde, int nivå)

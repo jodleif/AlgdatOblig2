@@ -1,7 +1,7 @@
 package jodleif.Logikk;
 
 import jodleif.Main;
-import jodleif.VinkelCache;
+import jodleif.Felles.VinkelCache;
 
 import java.util.ArrayList;
 

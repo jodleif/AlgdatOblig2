@@ -3,7 +3,7 @@ package jodleif.Render;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import jodleif.Hjelpemetoder;
+import jodleif.Felles.Hjelpemetoder;
 import jodleif.Logikk.Tegnbar;
 import jodleif.Main;
 

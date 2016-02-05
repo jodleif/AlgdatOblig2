@@ -1,4 +1,4 @@
-package jodleif;
+package jodleif.Felles;
 
 import java.util.HashMap;
 
