@@ -57,9 +57,12 @@ public class Sierpinsky implements Tegnbar
 		}
 
 		// Rekursjon
-		rekursivTegn(x0,y0,lengde/2,nivå-1);
-		rekursivTegn(x0-lengde/4,y0-lengde/2,lengde/2,nivå-1);
-		rekursivTegn(x0-lengde/2,y0,lengde/2,nivå-1);
+		rekursivTegn(x0,y0,
+			lengde/2,nivå-1);
+		rekursivTegn(x0-lengde/4,y0-lengde/2,
+			lengde/2,nivå-1);
+		rekursivTegn(x0-lengde/2,y0,
+			lengde/2,nivå-1);
 	}
 
 	@Override

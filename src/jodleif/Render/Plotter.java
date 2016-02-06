@@ -170,7 +170,7 @@ public class Plotter
 		);
 	}
 
-	private static Canvas lagNyttTegneområde()
+	protected static Canvas lagNyttTegneområde()
 	{
 		Canvas nyttTegneområde = new Canvas();
 		nyttTegneområde.setHeight(Main.HEIGHT);

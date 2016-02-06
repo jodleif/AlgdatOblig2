@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import jodleif.Logikk.Sierpinsky;
 import jodleif.Logikk.Tegnbar;
 import jodleif.Logikk.Tre;
+import jodleif.Render.Intro;
 import jodleif.Render.Plotter;
 
 public class Main extends Application
@@ -48,6 +49,7 @@ public class Main extends Application
 		Scene scene = new Scene(hovedLayout, WIDTH, HEIGHT+50);
 
 		settOppGui();
+		hovedLayout.setCenter(new Intro().tegnBokstaver());
 
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
@@ -103,7 +105,7 @@ public class Main extends Application
 		if(valgGruppe.getSelectedToggle()==tglSierp) {
 			tre = new Sierpinsky(6, INITIELL_LENGDE.get()*4);
 		} else {
-			tre = new Tre(10, INITIELL_LENGDE.get(),VINKEL_VEKST.get());
+			tre = new Tre(10, INITIELL_LENGDE.get(), VINKEL_VEKST.get());
 		}
 		hovedLayout.setCenter(plotter.tegn(tre));
 	}
