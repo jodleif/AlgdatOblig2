@@ -49,6 +49,11 @@ public class Main extends Application
 	static int nivå=0;
 
 
+	/**
+	 * Hovedmetode for guiet
+	 * @param primaryStage --
+	 * @throws Exception
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
@@ -136,6 +141,9 @@ public class Main extends Application
 		varPanel.getChildren().addAll(vinkelLabel,vinkel,lengdeLabel,lengde, nivåLabel, nivåer, lengdeVekstLabel, lengdeVekst);
 	}
 
+	/**
+	 * Sett opp guiet for justering av sierpinsky trianglet
+	 */
 	private void justerForSierpinsky()
 	{
 		varPanel.getChildren().clear();
@@ -147,6 +155,9 @@ public class Main extends Application
 		lengde.setMajorTickUnit(200);
 	}
 
+	/**
+	 * Sett opp GUIet for justering av Tre
+	 */
 	private void justerForTre()
 	{
 		varPanel.getChildren().clear();
