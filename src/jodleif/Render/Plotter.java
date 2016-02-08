@@ -2,12 +2,10 @@ package jodleif.Render;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import jodleif.Logikk.Tegnbar;
 import jodleif.Main;
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 /**
  * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 04.02.2016.
@@ -40,21 +38,6 @@ public class Plotter
 	 */
 	public static void tegnNivå(ArrayList<double[]> nivå, GraphicsContext grafikk, int avstandTilTopp)
 	{
-		switch(avstandTilTopp) {
-			case 0:
-				grafikk.setStroke(Color.LIGHTPINK);
-				break;
-			case 1:
-				grafikk.setStroke(Color.LIGHTGREEN);
-				break;
-			case 2:
-			case 3:
-				grafikk.setStroke(Color.GREEN);
-				break;
-			default:
-				grafikk.setStroke(Color.BLACK);
-		}
-
 		for(double[] linje : nivå){
 			// linje[] -> {x0,y0,x1,y1}
 			grafikk.strokeLine(linje[0],linje[1],linje[2],linje[3]);
@@ -77,6 +60,12 @@ public class Plotter
 				return new Canvas();
 		}
 	}
+
+	/**
+	 * Tegn opp et triangelbasert Tegnbar objekt
+	 * @param tegnbar Objektet som skal tegnes
+	 * @return Canvas med figuren på
+	 */
 	private Canvas tegnTriangler(Tegnbar tegnbar)
 	{
 		Canvas nyttTegneområde = lagNyttTegneområde();
@@ -85,7 +74,6 @@ public class Plotter
 		{
 			for(double[] triangel : triangler){
 
-				//grafikkKontekst.setFill(finnTilfeldigFarge());
 				/**
 				 * Tegne en trekant ved hjelp av tre punkter
 				 * (ett i hvert hjørne)
@@ -96,22 +84,6 @@ public class Plotter
 		return nyttTegneområde;
 	}
 
-	/*
-
- 	private final static Color[] farger = {
-		Color.BLACK,
-		Color.PINK,
-		Color.GREEN,
-		Color.RED,
-		Color.AZURE,
-		Color.YELLOW,
-		Color.CYAN
-	};
-	private static Color finnTilfeldigFarge()
-	{
-		int rnd = (int)(Math.random() * farger.length);
-		return farger[rnd%farger.length]; //Beskyttelse for å gå utenfor.
-	}*/
 
 	/**
 	 * Tegn et tegnbart objekt som består av linjer
@@ -129,38 +101,17 @@ public class Plotter
 		}
 		return nyttTegneområde;
 	}
-/*
-	private Canvas tegnAnimerteTriangler(Tegnbar tegnbar)
-	{
-		Canvas nyttTegneområde = lagNyttTegneområde();
-		GraphicsContext grafikkKontekst = nyttTegneområde.getGraphicsContext2D();
-		ArrayList<double[]> punkter = tegnbar.getPunkter().get(0);
-		ArrayList<DrawTriangles> taskListe = new ArrayList<>();
-		int teller = 0;
 
-		ArrayList<double[]> punktKopi = new ArrayList<>();
-		for(double[] punkt : punkter)
-		{
-			++teller;
-			punktKopi.add(punkt);
-			// for hver gruppe med 25 trekanter
-			if(teller%3==0)
-			{
-				// lag en tegneoppgave
-				taskListe.add(new DrawTriangles(punktKopi, grafikkKontekst));
-				// opprett en ny liste med trekanter
-				punktKopi = new ArrayList<>();
-			}
-		}
-		Timer timer = new Timer();
-
-		for(int i=0;i<taskListe.size();++i)
-		{
-			timer.schedule(taskListe.get(i), i*10);
-		}
-		return nyttTegneområde;
-	}*/
-
+	/**
+	 * Tegn et triangel basert på koordinater gitt:
+	 * double[] {
+	 *         x0,y0,
+	 *         x1,y1,
+	 *         x2,y2
+	 * }
+	 * @param triangel 3 x,y koordinater til hjørner i triangel
+	 * @param cnt grafisk kontekst fra canvaset som skal vises
+	 */
 	private static void tegnTriangel(double[] triangel, GraphicsContext cnt)
 	{
 		cnt.fillPolygon(
@@ -170,62 +121,15 @@ public class Plotter
 		);
 	}
 
+	/**
+	 * Opprette en tom Canvas med egenskaper som passer til hovedvinduet
+	 * @return ny tom Canvas
+	 */
 	protected static Canvas lagNyttTegneområde()
 	{
 		Canvas nyttTegneområde = new Canvas();
 		nyttTegneområde.setHeight(Main.HEIGHT);
 		nyttTegneområde.setWidth(Main.WIDTH);
 		return nyttTegneområde;
-	}
-	/**
-	 * Indre klasse som brukes for å kunne planlegge utføring av "tegning" på canvas, i en timer.
- 	 */
-	class DrawTimer extends TimerTask
-	{
-		protected int avstandTilTopp;
-		protected ArrayList<double[]> punkter;
-		protected GraphicsContext cont;
-
-		public DrawTimer(int avstandTilTopp, ArrayList<double[]> punkter, GraphicsContext cont)
-		{
-			this.avstandTilTopp = avstandTilTopp;
-			this.punkter = punkter;
-			this.cont = cont;
-		}
-		@Override
-		public void run()
-		{
-			tegnNivå(punkter, cont, avstandTilTopp);
-		}
-
-	}
-
-	class DrawTriangles extends TimerTask
-	{
-		protected ArrayList<double[]> punkter;
-		protected GraphicsContext cnt;
-		public DrawTriangles(ArrayList<double[]> trekanter, GraphicsContext cnt)
-		{
-			this.cnt = cnt;
-			this.punkter = trekanter;
-		}
-
-		@Override
-		public void run()
-		{
-			punkter.forEach(doubles -> cnt.fillPolygon(
-				new double[]{ // x-punkter
-					doubles[0],
-					doubles[2],
-					doubles[4]
-				}, new double[] { // y-punkter
-					doubles[1],
-					doubles[3],
-					doubles[5],
-				},
-				3
-			));
-		}
-
 	}
 }
