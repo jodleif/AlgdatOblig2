@@ -23,14 +23,16 @@ public class Tre implements Tegnbar
 	/**
 	 * Konstruktør for "Tre-generator"
 	 * @param nivåer antall nivåer av treet
-	 * @param initiell_lengde lengde på første linje
-	 * @param vinkel_vekst endring i vinkel per "rekursjon"
+	 * @param initiellLengde lengde på første linje
+	 * @param vinkelVekst endring i vinkel per "rekursjon"
+	 * @param lengdeVekst endring i lengde per rekursjon
 	 */
-	public Tre(int nivåer, double initiell_lengde, double vinkel_vekst)
+	public Tre(int nivåer, double initiellLengde, double vinkelVekst, double lengdeVekst)
 	{
 		this.nivåer = nivåer;
-		INITIELL_LENGDE = initiell_lengde;
-		VINKEL_VEKST = vinkel_vekst;
+		INITIELL_LENGDE = initiellLengde;
+		VINKEL_VEKST = vinkelVekst;
+		VEKSTFAKTOR = lengdeVekst;
 		genererPunkter();
 	}
 

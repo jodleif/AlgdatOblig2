@@ -31,7 +31,7 @@ public class Intro
 
 		oppgaveListe.addAll(erstattMedBokstaver(buffer,nyttCanvas.getGraphicsContext2D()));
 
-		utførTimerList(oppgaveListe, 125);
+		utførTimerList(oppgaveListe, 75);
 		return nyttCanvas;
 	}
 

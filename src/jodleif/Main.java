@@ -27,6 +27,7 @@ public class Main extends Application
 	private final Slider vinkel = new Slider();
 	private final Slider lengde = new Slider();
 	private final Slider nivåer = new Slider();
+	private final Slider lengdeVekst = new Slider();
 	private Tegnbar tre;
 	private Plotter plotter = new Plotter();
 	private ToggleGroup valgGruppe;
@@ -39,6 +40,7 @@ public class Main extends Application
 	private static DoubleProperty VINKEL_VEKST ;
 	private static DoubleProperty INITIELL_LENGDE;
 	private static DoubleProperty NIVÅ;
+	private static DoubleProperty LENGDE_VEKST;
 	static int nivå=0;
 
 
@@ -48,6 +50,8 @@ public class Main extends Application
 		Scene scene = new Scene(hovedLayout, WIDTH, HEIGHT+50);
 
 		settOppGui();
+		opprettSlidere();
+
 		hovedLayout.setCenter(new Intro().tegnBokstaver());
 
 		primaryStage.setScene(scene);
@@ -73,36 +77,6 @@ public class Main extends Application
 		// Visk ut nuller ut canvas
 		viskUt.setOnAction(e-> hovedLayout.setCenter(null));
 
-		Label vinkelLabel = new Label("Vinkel");
-		vinkel.setBlockIncrement(0.1);
-		vinkel.setMax(Math.PI);
-		vinkel.setMin(0);
-		vinkel.showTickLabelsProperty().setValue(true);
-		vinkel.showTickMarksProperty().setValue(true);
-		vinkel.setMajorTickUnit(Math.PI/4.0);
-		VINKEL_VEKST = vinkel.valueProperty();
-
-
-
-		Label lengdeLabel = new Label("Initiell lengde");
-		lengde.setBlockIncrement(10);
-		lengde.setMajorTickUnit(50);
-		lengde.setMin(0);
-		lengde.setMax(200);
-		lengde.showTickLabelsProperty().setValue(true);
-		lengde.showTickMarksProperty().setValue(true);
-		INITIELL_LENGDE = lengde.valueProperty();
-
-		Label nivåLabel = new Label("Nivåer av rekursjon");
-		nivåer.setBlockIncrement(1.0);
-		nivåer.setMajorTickUnit(4);
-		nivåer.setMin(1);
-		nivåer.setMax(17);
-		nivåer.showTickMarksProperty().setValue(true);
-		nivåer.showTickLabelsProperty().setValue(true);
-		NIVÅ = nivåer.valueProperty();
-
-		varPanel.getChildren().addAll(vinkelLabel,vinkel,lengdeLabel,lengde, nivåLabel, nivåer);
 
 		valgGruppe = new ToggleGroup();
 		tglSierp = new ToggleButton("Sierpinsky");
@@ -115,6 +89,47 @@ public class Main extends Application
 
 	}
 
+	private void opprettSlidere()
+	{
+		Label vinkelLabel = new Label("Vinkel");
+		vinkel.setBlockIncrement(0.1);
+		vinkel.setMax(Math.PI);
+		vinkel.setMin(0);
+		vinkel.showTickLabelsProperty().setValue(true);
+		vinkel.showTickMarksProperty().setValue(true);
+		vinkel.setMajorTickUnit(Math.PI/4.0);
+		VINKEL_VEKST = vinkel.valueProperty();
+
+		Label lengdeLabel = new Label("Initiell lengde");
+		lengde.setBlockIncrement(10);
+		lengde.setMajorTickUnit(50);
+		lengde.setMin(0);
+		lengde.setMax(200);
+		lengde.showTickLabelsProperty().setValue(true);
+		lengde.showTickMarksProperty().setValue(true);
+		INITIELL_LENGDE = lengde.valueProperty();
+
+		Label nivåLabel = new Label("Rekursjon");
+		nivåer.setBlockIncrement(1.0);
+		nivåer.setMajorTickUnit(4);
+		nivåer.setMin(1);
+		nivåer.setMax(17);
+		nivåer.showTickMarksProperty().setValue(true);
+		nivåer.showTickLabelsProperty().setValue(true);
+		NIVÅ = nivåer.valueProperty();
+
+		Label lengdeVekstLabel = new Label("Vekstfaktor");
+		lengdeVekst.setBlockIncrement(0.1);
+		lengdeVekst.setMajorTickUnit(0.1);
+		lengdeVekst.setMin(0.1);
+		lengdeVekst.setMax(0.9);
+		lengdeVekst.showTickMarksProperty().setValue(true);
+		lengdeVekst.showTickLabelsProperty().setValue(true);
+		LENGDE_VEKST = lengdeVekst.valueProperty();
+
+		varPanel.getChildren().addAll(vinkelLabel,vinkel,lengdeLabel,lengde, nivåLabel, nivåer, lengdeVekstLabel, lengdeVekst);
+	}
+
 	/**
 	 * Funksjon for å tegne tre!
 	 */
@@ -123,7 +138,7 @@ public class Main extends Application
 		if(valgGruppe.getSelectedToggle()==tglSierp) {
 			tre = new Sierpinsky((int)NIVÅ.get(), INITIELL_LENGDE.get()*4);
 		} else {
-			tre = new Tre((int)NIVÅ.get(), INITIELL_LENGDE.get(), VINKEL_VEKST.get());
+			tre = new Tre((int)NIVÅ.get(), INITIELL_LENGDE.get(), VINKEL_VEKST.get(), LENGDE_VEKST.get());
 		}
 		hovedLayout.setCenter(plotter.tegn(tre));
 	}
