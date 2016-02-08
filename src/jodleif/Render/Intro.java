@@ -24,12 +24,14 @@ public class Intro
 		Canvas nyttCanvas = Plotter.lagNyttTegneområde();
 		nyttCanvas.getGraphicsContext2D().setFont(new Font(40));
 
+		StringBuilder buffer = new StringBuilder();
+
 		ArrayList<BokstavTimer> oppgaveListe =
-			ekspanderStreng(nyttCanvas.getGraphicsContext2D());
+			ekspanderStreng(buffer,nyttCanvas.getGraphicsContext2D());
 
-		oppgaveListe.addAll(erstattMedBokstaver(nyttCanvas.getGraphicsContext2D()));
+		oppgaveListe.addAll(erstattMedBokstaver(buffer,nyttCanvas.getGraphicsContext2D()));
 
-		utførTimerList(oppgaveListe, 100);
+		utførTimerList(oppgaveListe, 125);
 		return nyttCanvas;
 	}
 
@@ -38,14 +40,13 @@ public class Intro
 	 * @param kontekst grafisk kontekst oppgaven skal tegnes på
 	 * @return liste over oppgaver
 	 */
-	private ArrayList<BokstavTimer> ekspanderStreng(GraphicsContext kontekst)
+	private ArrayList<BokstavTimer> ekspanderStreng(StringBuilder buffer, GraphicsContext kontekst)
 	{
 		ArrayList<BokstavTimer> oppgaveListe = new ArrayList<>() ;
-		StringBuilder strBld = new StringBuilder();
 		for(int i = 0; i< målTekst.length(); ++i){
-			byggRandomString(strBld,i);
-			oppgaveListe.add(new BokstavTimer(strBld.toString(), kontekst));
-			if(i!= målTekst.length()-1) strBld.setLength(0);
+			byggRandomString(buffer,i);
+			oppgaveListe.add(new BokstavTimer(buffer.toString(), kontekst));
+			if(i!= målTekst.length()-1) buffer.setLength(0);
 		}
 		return oppgaveListe;
 	}
@@ -55,13 +56,12 @@ public class Intro
  	 * @param kontekst grafikk-kontekst for canvaset oppgaven skal utføres på
 	 * @return Liste med oppgaver
 	 */
-	private ArrayList<BokstavTimer> erstattMedBokstaver(GraphicsContext kontekst)
+	private ArrayList<BokstavTimer> erstattMedBokstaver(StringBuilder buffer, GraphicsContext kontekst)
 	{
 		ArrayList<BokstavTimer> oppgaveListe = new ArrayList<>() ;
-		StringBuilder strBld = new StringBuilder(målTekst);
 		for(int i = 0; i< målTekst.length(); ++i){
-			strBld.setCharAt(i, målTekst.charAt(i));
-			oppgaveListe.add(new BokstavTimer(strBld.toString(), kontekst));
+			buffer.setCharAt(i, målTekst.charAt(i));
+			oppgaveListe.add(new BokstavTimer(buffer.toString(), kontekst));
 		}
 		return oppgaveListe;
 	}

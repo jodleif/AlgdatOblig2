@@ -4,10 +4,7 @@ import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,8 +24,9 @@ public class Main extends Application
 	private final VBox kontrollPanel = new VBox();
 	private final HBox knappePanel = new HBox();
 	private final HBox varPanel = new HBox();
-	private final ScrollBar vinkel = new ScrollBar();
-	private final ScrollBar lengde = new ScrollBar();
+	private final Slider vinkel = new Slider();
+	private final Slider lengde = new Slider();
+	private final Slider nivåer = new Slider();
 	private Tegnbar tre;
 	private Plotter plotter = new Plotter();
 	private ToggleGroup valgGruppe;
@@ -40,6 +38,7 @@ public class Main extends Application
 	private static double MIN_LEN = 2.0;
 	private static DoubleProperty VINKEL_VEKST ;
 	private static DoubleProperty INITIELL_LENGDE;
+	private static DoubleProperty NIVÅ;
 	static int nivå=0;
 
 
@@ -74,17 +73,36 @@ public class Main extends Application
 		// Visk ut nuller ut canvas
 		viskUt.setOnAction(e-> hovedLayout.setCenter(null));
 
-		vinkel.setUnitIncrement(0.1);
+		Label vinkelLabel = new Label("Vinkel");
+		vinkel.setBlockIncrement(0.1);
 		vinkel.setMax(Math.PI);
 		vinkel.setMin(0);
+		vinkel.showTickLabelsProperty().setValue(true);
+		vinkel.showTickMarksProperty().setValue(true);
+		vinkel.setMajorTickUnit(Math.PI/4.0);
 		VINKEL_VEKST = vinkel.valueProperty();
 
-		lengde.setUnitIncrement(5);
-		lengde.setMin(5);
+
+
+		Label lengdeLabel = new Label("Initiell lengde");
+		lengde.setBlockIncrement(10);
+		lengde.setMajorTickUnit(50);
+		lengde.setMin(0);
 		lengde.setMax(200);
+		lengde.showTickLabelsProperty().setValue(true);
+		lengde.showTickMarksProperty().setValue(true);
 		INITIELL_LENGDE = lengde.valueProperty();
 
-		varPanel.getChildren().addAll(vinkel,lengde);
+		Label nivåLabel = new Label("Nivåer av rekursjon");
+		nivåer.setBlockIncrement(1.0);
+		nivåer.setMajorTickUnit(4);
+		nivåer.setMin(1);
+		nivåer.setMax(17);
+		nivåer.showTickMarksProperty().setValue(true);
+		nivåer.showTickLabelsProperty().setValue(true);
+		NIVÅ = nivåer.valueProperty();
+
+		varPanel.getChildren().addAll(vinkelLabel,vinkel,lengdeLabel,lengde, nivåLabel, nivåer);
 
 		valgGruppe = new ToggleGroup();
 		tglSierp = new ToggleButton("Sierpinsky");
@@ -103,9 +121,9 @@ public class Main extends Application
 	private void tegnTre()
 	{
 		if(valgGruppe.getSelectedToggle()==tglSierp) {
-			tre = new Sierpinsky(6, INITIELL_LENGDE.get()*4);
+			tre = new Sierpinsky((int)NIVÅ.get(), INITIELL_LENGDE.get()*4);
 		} else {
-			tre = new Tre(10, INITIELL_LENGDE.get(), VINKEL_VEKST.get());
+			tre = new Tre((int)NIVÅ.get(), INITIELL_LENGDE.get(), VINKEL_VEKST.get());
 		}
 		hovedLayout.setCenter(plotter.tegn(tre));
 	}

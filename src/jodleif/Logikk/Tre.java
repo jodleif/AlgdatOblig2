@@ -20,6 +20,12 @@ public class Tre implements Tegnbar
 	private double INITIELL_LENGDE;
 	private int nivåer;
 
+	/**
+	 * Konstruktør for "Tre-generator"
+	 * @param nivåer antall nivåer av treet
+	 * @param initiell_lengde lengde på første linje
+	 * @param vinkel_vekst endring i vinkel per "rekursjon"
+	 */
 	public Tre(int nivåer, double initiell_lengde, double vinkel_vekst)
 	{
 		this.nivåer = nivåer;
@@ -28,6 +34,9 @@ public class Tre implements Tegnbar
 		genererPunkter();
 	}
 
+	/**
+	 * Hjelpemetode for å starte rekursjon
+	 */
 	private void genererPunkter()
 	{
 		punkterITre = new ArrayList<>();
@@ -36,21 +45,33 @@ public class Tre implements Tegnbar
 		tegnGrein((Main.WIDTH)/2.0,Main.HEIGHT,INITIELL_LENGDE,0,0);
 	}
 
-	private void tegnGrein(double x0, double y0, double length, double vinkel, int nivå)
+	/**
+	 * Rekursjonsfunksjon for å tegne treet
+	 * @param x0 initiell x-pos
+	 * @param y0 initiell y-pos
+	 * @param lengde lengde på linjestykke
+	 * @param vinkel vinkel på linje som skal tegnes
+	 * @param nivå hvilket nivå rekursjonen er på
+	 */
+	private void tegnGrein(double x0, double y0, double lengde, double vinkel, int nivå)
 	{
 		if(nivå >= nivåer){
 			return;
 		}
 		// Minus da treet vokser i negativ y-retning
-		double nyX = x0-length*cache.getSinVinkel(vinkel);
-		double nyY = y0-length*cache.getCosVinkel(vinkel);
+		double nyX = x0-lengde*cache.getSinVinkel(vinkel);
+		double nyY = y0-lengde*cache.getCosVinkel(vinkel);
 
 		punkterITre.get(nivå).add(new double[] {x0,y0,nyX,nyY});
 
-		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel+VINKEL_VEKST, nivå+1);
-		tegnGrein(nyX,nyY, length*VEKSTFAKTOR, vinkel-VINKEL_VEKST, nivå+1);
+		tegnGrein(nyX,nyY, lengde*VEKSTFAKTOR, vinkel+VINKEL_VEKST, nivå+1);
+		tegnGrein(nyX,nyY, lengde*VEKSTFAKTOR, vinkel-VINKEL_VEKST, nivå+1);
 	}
 
+	/**
+	 * Typen objekt dette er
+	 * @return linje
+	 */
 	public BasisObjekt getBasisObjekt()
 	{
 		return BasisObjekt.Linje;
