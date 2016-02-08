@@ -1,4 +1,4 @@
-package jodleif.Felles;
+package AlgdatOblig2.Felles;
 
 import java.util.HashMap;
 

@@ -1,6 +1,6 @@
-package jodleif.Logikk;
+package AlgdatOblig2.Logikk;
 
-import jodleif.Main;
+import AlgdatOblig2.Main;
 
 import java.util.ArrayList;
 

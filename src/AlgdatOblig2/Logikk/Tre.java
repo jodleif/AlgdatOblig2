@@ -1,7 +1,7 @@
-package jodleif.Logikk;
+package AlgdatOblig2.Logikk;
 
-import jodleif.Main;
-import jodleif.Felles.VinkelCache;
+import AlgdatOblig2.Main;
+import AlgdatOblig2.Felles.VinkelCache;
 
 import java.util.ArrayList;
 

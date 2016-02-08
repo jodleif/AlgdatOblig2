@@ -1,4 +1,4 @@
-package jodleif.Logikk;
+package AlgdatOblig2.Logikk;
 
 import java.util.ArrayList;
 

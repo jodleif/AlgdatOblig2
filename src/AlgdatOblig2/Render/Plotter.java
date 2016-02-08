@@ -1,9 +1,9 @@
-package jodleif.Render;
+package AlgdatOblig2.Render;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import jodleif.Logikk.Tegnbar;
-import jodleif.Main;
+import AlgdatOblig2.Logikk.Tegnbar;
+import AlgdatOblig2.Main;
 
 import java.util.ArrayList;
 

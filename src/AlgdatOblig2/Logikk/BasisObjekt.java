@@ -1,4 +1,4 @@
-package jodleif.Logikk;
+package AlgdatOblig2.Logikk;
 
 /**
  * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 05.02.2016.

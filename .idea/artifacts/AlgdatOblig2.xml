@@ -15,7 +15,7 @@
       <element id="archive" name="AlgdatOblig2.jar">
         <element id="module-output" name="AlgdatOblig2" />
         <element id="directory" name="META-INF">
-          <element id="file-copy" path="$PROJECT_DIR$/src/jodleif/META-INF/MANIFEST.MF" />
+          <element id="file-copy" path="$PROJECT_DIR$/src/AlgdatOblig2/META-INF/MANIFEST.MF" />
         </element>
       </element>
     </root>

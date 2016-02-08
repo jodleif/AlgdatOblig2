@@ -1,4 +1,4 @@
-package jodleif;
+package AlgdatOblig2;
 
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
@@ -9,11 +9,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import jodleif.Logikk.Sierpinsky;
-import jodleif.Logikk.Tegnbar;
-import jodleif.Logikk.Tre;
-import jodleif.Render.Intro;
-import jodleif.Render.Plotter;
+import AlgdatOblig2.Logikk.Sierpinsky;
+import AlgdatOblig2.Logikk.Tegnbar;
+import AlgdatOblig2.Logikk.Tre;
+import AlgdatOblig2.Render.Intro;
+import AlgdatOblig2.Render.Plotter;
 
 public class Main extends Application
 {
