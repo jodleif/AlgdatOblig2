@@ -40,13 +40,10 @@ public class Main extends Application
 	private ToggleButton tglTre;
 
 	// VARIABLER FOR TEGNING AV TREET
-	private static double VEKSTFAKTOR = 0.7;
-	private static double MIN_LEN = 2.0;
 	private static DoubleProperty VINKEL_VEKST ;
 	private static DoubleProperty INITIELL_LENGDE;
 	private static DoubleProperty NIVÅ;
 	private static DoubleProperty LENGDE_VEKST;
-	static int nivå=0;
 
 
 	/**
