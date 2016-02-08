@@ -64,6 +64,7 @@ public class Main extends Application
 
 		hovedLayout.setCenter(new Intro().tegnBokstaver());
 
+		primaryStage.setTitle("SUPERKULT MED REKURSJON!");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
