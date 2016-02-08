@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 
 /**
- * Created by Jo Øivind Gjernes on 04.02.2016.
+ * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 04.02.2016.
  *
  * Klasse for å plotte et "tegnbart" interface basert på hvilket type BasisObjekt som skal tegnes
  *

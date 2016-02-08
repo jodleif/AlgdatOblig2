@@ -6,7 +6,7 @@ import jodleif.Felles.VinkelCache;
 import java.util.ArrayList;
 
 /**
- * Created by Jo Øivind Gjernes on 03.02.2016.
+ * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 03.02.2016.
  *
  * Treet.
  */

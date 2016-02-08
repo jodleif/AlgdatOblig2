@@ -1,7 +1,7 @@
 package jodleif.Logikk;
 
 /**
- * Created by Jo Øivind Gjernes on 05.02.2016.
+ * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 05.02.2016.
  *
  * Ulike typer "basisobjekter" som skal kunne tegnes.
  */

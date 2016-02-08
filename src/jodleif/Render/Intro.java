@@ -10,7 +10,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Jo Øivind Gjernes on 05.02.2016.
+ * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 05.02.2016.
+ *
+ * Tegne "Introen" på skjermen.
  */
 public class Intro
 {

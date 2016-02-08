@@ -3,7 +3,7 @@ package jodleif.Logikk;
 import java.util.ArrayList;
 
 /**
- * Created by Jo Øivind Gjernes on 04.02.2016.
+ * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 04.02.2016.
  *
  */
 public interface Tegnbar

@@ -3,9 +3,11 @@ package jodleif.Felles;
 import java.util.HashMap;
 
 /**
- * Created by Jo Øivind Gjernes on 03.02.2016.
+ * Created by Jo Øivind Gjernes og Magnus Poppe Wang on 03.02.2016.
  *
  * Hurtiglager for utregning av cosinus og sinus
+ *
+ * Om dette er en forbedring over å bare regne ut verdier, har vi ikke undersøkt.
  */
 public class VinkelCache
 {
