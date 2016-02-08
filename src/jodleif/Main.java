@@ -24,6 +24,11 @@ public class Main extends Application
 	private final VBox kontrollPanel = new VBox();
 	private final HBox knappePanel = new HBox();
 	private final HBox varPanel = new HBox();
+
+	private final Label vinkelLabel = new Label("Vinkel");
+	private final Label lengdeLabel = new Label("Initiell lengde");
+	private final Label nivåLabel = new Label("Rekursjon");
+	private final Label lengdeVekstLabel = new Label("Vekstfaktor");
 	private final Slider vinkel = new Slider();
 	private final Slider lengde = new Slider();
 	private final Slider nivåer = new Slider();
@@ -81,17 +86,21 @@ public class Main extends Application
 		valgGruppe = new ToggleGroup();
 		tglSierp = new ToggleButton("Sierpinsky");
 		tglSierp.setToggleGroup(valgGruppe);
+		tglSierp.setOnAction(e->justerForSierpinsky());
 		tglTre = new ToggleButton("Tre");
 		tglTre.setToggleGroup(valgGruppe);
+		tglTre.setOnAction(e->justerForTre());
 		valgGruppe.selectToggle(tglTre);
 		knappePanel.getChildren().addAll(tglSierp, tglTre);
 
 
 	}
 
+	/**
+	 * Opprett slidere for justering av parametere for rekursjon
+	 */
 	private void opprettSlidere()
 	{
-		Label vinkelLabel = new Label("Vinkel");
 		vinkel.setBlockIncrement(0.1);
 		vinkel.setMax(Math.PI);
 		vinkel.setMin(0);
@@ -100,7 +109,6 @@ public class Main extends Application
 		vinkel.setMajorTickUnit(Math.PI/4.0);
 		VINKEL_VEKST = vinkel.valueProperty();
 
-		Label lengdeLabel = new Label("Initiell lengde");
 		lengde.setBlockIncrement(10);
 		lengde.setMajorTickUnit(50);
 		lengde.setMin(0);
@@ -109,7 +117,6 @@ public class Main extends Application
 		lengde.showTickMarksProperty().setValue(true);
 		INITIELL_LENGDE = lengde.valueProperty();
 
-		Label nivåLabel = new Label("Rekursjon");
 		nivåer.setBlockIncrement(1.0);
 		nivåer.setMajorTickUnit(4);
 		nivåer.setMin(1);
@@ -118,7 +125,6 @@ public class Main extends Application
 		nivåer.showTickLabelsProperty().setValue(true);
 		NIVÅ = nivåer.valueProperty();
 
-		Label lengdeVekstLabel = new Label("Vekstfaktor");
 		lengdeVekst.setBlockIncrement(0.1);
 		lengdeVekst.setMajorTickUnit(0.1);
 		lengdeVekst.setMin(0.1);
@@ -130,13 +136,35 @@ public class Main extends Application
 		varPanel.getChildren().addAll(vinkelLabel,vinkel,lengdeLabel,lengde, nivåLabel, nivåer, lengdeVekstLabel, lengdeVekst);
 	}
 
+	private void justerForSierpinsky()
+	{
+		varPanel.getChildren().clear();
+		varPanel.getChildren().addAll(lengdeLabel,lengde,nivåLabel,nivåer);
+		nivåer.setMin(1.0);
+		nivåer.setMax(9.0);
+		lengde.setMin(0);
+		lengde.setMax(1000);
+		lengde.setMajorTickUnit(200);
+	}
+
+	private void justerForTre()
+	{
+		varPanel.getChildren().clear();
+		varPanel.getChildren().addAll(vinkelLabel,vinkel,lengdeLabel,lengde, nivåLabel, nivåer, lengdeVekstLabel, lengdeVekst);
+		lengde.setMin(0);
+		lengde.setMax(200);
+		lengde.setMajorTickUnit(50);
+		nivåer.setMin(1);
+		nivåer.setMax(17);
+	}
+
 	/**
 	 * Funksjon for å tegne tre!
 	 */
 	private void tegnTre()
 	{
 		if(valgGruppe.getSelectedToggle()==tglSierp) {
-			tre = new Sierpinsky((int)NIVÅ.get(), INITIELL_LENGDE.get()*4);
+			tre = new Sierpinsky((int)NIVÅ.get(), INITIELL_LENGDE.get());
 		} else {
 			tre = new Tre((int)NIVÅ.get(), INITIELL_LENGDE.get(), VINKEL_VEKST.get(), LENGDE_VEKST.get());
 		}
